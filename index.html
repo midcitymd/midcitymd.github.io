@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>호텔 미드시티 명동 투숙 안내</title>
+<meta name="description" content="호텔 미드시티 명동 투숙객 안내 — 와이파이, 체크인·아웃, 조식, 짐보관, 자주 묻는 질문">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#17201C;
+    --ink-2:#4A5650;
+    --paper:#FBFCFA;
+    --line:#DCE3DE;
+    --garden:#1F4D3A;
+    --garden-soft:#E7EFEA;
+    --key:#E3B341;
+    --todo:#FFF1B8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:"Pretendard Variable",Pretendard,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    background:var(--paper);color:var(--ink);
+    font-size:16px;line-height:1.6;word-break:keep-all;
+  }
+  .wrap{max-width:560px;margin:0 auto;padding:0 16px}
+
+  /* 상단 */
+  header{background:var(--garden);color:#fff;padding:36px 0 28px}
+  header .hotel{font-size:15px;opacity:.8;font-weight:500}
+  header h1{font-size:30px;line-height:1.25;font-weight:800;letter-spacing:-.02em;margin-top:6px}
+  header p{font-size:15px;opacity:.85;margin-top:10px}
+
+  /* 핵심 정보 */
+  .essentials{background:#fff;border:1px solid var(--line);border-radius:14px;margin-top:-14px;position:relative;overflow:hidden}
+  .row{display:flex;align-items:center;gap:12px;padding:16px 18px;border-top:1px solid var(--line)}
+  .row:first-child{border-top:0}
+  .row .label{width:78px;flex-shrink:0;font-size:14px;color:var(--ink-2)}
+  .row .value{flex:1;font-weight:700;font-size:17px;min-width:0;overflow-wrap:anywhere}
+  .row .value small{display:block;font-weight:500;font-size:14px;color:var(--ink-2)}
+  .times{display:flex;gap:18px}
+  .times span{display:block;font-size:13px;color:var(--ink-2);font-weight:500}
+  .btn{
+    flex-shrink:0;border:0;border-radius:999px;padding:9px 14px;
+    font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;
+    background:var(--key);color:var(--ink);
+  }
+  .btn.ghost{background:var(--garden-soft);color:var(--garden)}
+  .btn:focus-visible,.chip:focus-visible,summary:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--key);outline-offset:2px}
+
+  /* FAQ */
+  section{margin-top:36px}
+  h2{font-size:21px;font-weight:800;letter-spacing:-.01em}
+  .search{
+    width:100%;margin-top:14px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;
+    font:inherit;font-size:16px;background:#fff;color:var(--ink);
+  }
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{
+    flex-shrink:0;border:1px solid var(--line);background:#fff;color:var(--ink-2);
+    border-radius:999px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer;
+  }
+  .chip[aria-pressed="true"]{background:var(--garden);border-color:var(--garden);color:#fff;font-weight:700}
+
+  .faq{margin-top:10px}
+  .group-title{font-size:14px;font-weight:700;color:var(--garden);margin:22px 0 4px}
+  details{border-bottom:1px solid var(--line)}
+  summary{
+    list-style:none;cursor:pointer;padding:15px 30px 15px 0;position:relative;
+    font-weight:600;font-size:16px;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::after{
+    content:"";position:absolute;right:6px;top:50%;width:9px;height:9px;
+    border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);
+    transform:translateY(-70%) rotate(45deg);transition:transform .2s;
+  }
+  details[open] summary::after{transform:translateY(-30%) rotate(-135deg)}
+  details .a{padding:0 4px 18px 0;color:var(--ink-2);font-size:15px;line-height:1.7}
+  .empty{padding:24px 0;color:var(--ink-2);font-size:15px}
+
+  /* 하단 */
+  footer{margin-top:44px;padding:28px 0 calc(36px + env(safe-area-inset-bottom));background:var(--garden-soft);font-size:14px;color:var(--ink-2)}
+  footer strong{color:var(--ink);font-size:15px}
+  footer .links{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+  /* 아직 채우지 않은 [대괄호] 항목 — 내용을 채우면 자동으로 사라집니다 */
+  .todo{background:var(--todo);border-radius:4px;padding:0 3px;color:#7A5A00;font-weight:600}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="hotel" id="hotelName"></div>
+    <h1>머무는 동안<br>필요한 안내</h1>
+    <p>궁금한 점이 여기 없으면 언제든 프런트로 연락 주세요.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="essentials">
+    <div class="row">
+      <div class="label">Wi-Fi</div>
+      <div class="value" id="wifi"></div>
+      <button class="btn" id="copyPw" type="button">비밀번호 복사</button>
+    </div>
+    <div class="row">
+      <div class="label">입·퇴실</div>
+      <div class="value times" id="times"></div>
+    </div>
+    <div class="row">
+      <div class="label">프런트</div>
+      <div class="value" id="front"></div>
+      <a class="btn ghost" id="callBtn">전화하기</a>
+    </div>
+  </div>
+
+  <section aria-labelledby="faqTitle">
+    <h2 id="faqTitle">자주 묻는 질문</h2>
+    <input class="search" id="search" type="search" placeholder="예: 조식, 짐 보관, 공항" aria-label="질문 검색">
+    <div class="chips" id="chips" role="group" aria-label="분류"></div>
+    <div class="faq" id="faq"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <strong id="footName"></strong>
+    <div id="footAddr" style="margin-top:4px"></div>
+    <div class="links">
+      <a class="btn ghost" id="mapBtn" target="_blank" rel="noopener">지도 보기</a>
+      <a class="btn ghost" id="footCall">프런트 전화</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   여기만 수정하면 됩니다.
+   [대괄호] 안의 내용은 노란색으로 표시되니, 실제 정보로 바꿔 주세요.
+   (대괄호를 지우면 강조 표시도 사라집니다)
+   ========================================================= */
+const HOTEL = {
+  name: "호텔 미드시티 명동",
+  phone: "[02-0000-0000]",          // 프런트 직통번호
+  extension: "[객실 전화 0번]",      // 객실에서 프런트 거는 방법
+  address: "[서울특별시 중구 ...]",
+  mapUrl: "[네이버 지도 링크]",
+  wifi: { ssid: "[와이파이 이름]", pw: "[비밀번호]" },
+  checkin: "[15:00]",
+  checkout: "[11:00]"
+};
+
+const FAQ = [
+  // 체크인·아웃
+  { cat: "체크인·아웃", q: "체크인 전에 일찍 도착하면 어떻게 하나요?",
+    a: "객실이 준비되어 있으면 [얼리 체크인 조건/요금]으로 일찍 들어가실 수 있어요. 준비 전이라면 셀프 짐보관함에 짐을 맡기고 먼저 외출하셔도 됩니다." },
+  { cat: "체크인·아웃", q: "체크아웃을 늦게 할 수 있나요?",
+    a: "당일 객실 상황에 따라 [레이트 체크아웃 기준 시간·요금]으로 가능합니다. 체크아웃 전날까지 프런트에 요청해 주세요." },
+  { cat: "체크인·아웃", q: "체크아웃 후에도 짐을 맡길 수 있나요?",
+    a: "네. 체크아웃 후에도 셀프 짐보관함을 이용하실 수 있어요. 자세한 이용 방법은 아래 '짐 보관' 항목을 확인해 주세요." },
+
+  // 객실
+  { cat: "객실", q: "수건이나 어메니티를 더 받을 수 있나요?",
+    a: "[수령 방법 — 예: 프런트 방문 또는 객실 전화 0번 요청]. [유료/무료 여부]" },
+  { cat: "객실", q: "객실 청소는 언제 해 주나요?",
+    a: "[청소 정책 — 예: 연박 시 n일마다 / 요청 시]. 청소를 원하지 않으시면 [방해 금지 안내 방법]." },
+  { cat: "객실", q: "객실에서 흡연할 수 있나요?",
+    a: "전 객실 금연입니다. 흡연은 [지정 흡연 구역 위치]를 이용해 주세요." },
+  { cat: "객실", q: "냉난방은 어떻게 조절하나요?",
+    a: "[조작 방법 — 예: 벽면 컨트롤러 위치, 계절별 운영 방식]" },
+
+  // 조식·식사
+  { cat: "조식·식사", q: "조식은 어디서, 몇 시에 먹나요?",
+    a: "[층/위치]의 [업장명]에서 조식 뷔페가 운영됩니다.\n운영 시간: [00:00 ~ 00:00]\n요금: [조식 포함 객실 여부 / 현장 결제 금액]" },
+  { cat: "조식·식사", q: "저녁에 술 한잔할 곳이 있나요?",
+    a: "조식을 운영하는 [업장명]이 밤에는 펍으로 운영됩니다. 운영 시간: [00:00 ~ 00:00]" },
+  { cat: "조식·식사", q: "배달 음식을 시켜도 되나요?",
+    a: "[가능 여부와 수령 방법 — 예: 1층 로비에서 직접 수령]" },
+
+  // 짐 보관
+  { cat: "짐 보관", q: "짐보관함은 어디에 있나요?",
+    a: "[보관함 위치 — 예: 1층 로비 엘리베이터 옆]에 셀프 짐보관함이 있습니다." },
+  { cat: "짐 보관", q: "짐보관함은 어떻게 사용하나요?",
+    a: "[이용 순서 — 예: 빈 칸 선택 → 결제/비밀번호 설정 → 보관]\n요금: [투숙객 무료 여부 / 요금]\n이용 가능 시간: [00:00 ~ 00:00]" },
+
+  // 교통·주변
+  { cat: "교통·주변", q: "가장 가까운 지하철역은 어디인가요?",
+    a: "[역 이름] [n]번 출구에서 도보 약 [n]분입니다." },
+  { cat: "교통·주변", q: "인천공항에서 어떻게 오나요?",
+    a: "공항버스: [노선 번호]번 → [정류장] 하차 후 도보 [n]분\n지하철: [환승 경로 안내]\n택시: 약 [n]분, 약 [요금]원" },
+  { cat: "교통·주변", q: "주차할 수 있나요?",
+    a: "[주차 가능 여부, 위치, 요금]" },
+  { cat: "교통·주변", q: "근처에 편의점이나 약국이 있나요?",
+    a: "편의점: [위치]\n약국: [위치]" },
+
+  // 호텔 시설
+  { cat: "호텔 시설", q: "MIDCITY THE GARDEN은 어떤 곳인가요?",
+    a: "호텔 [층/위치]에 있는 어반가든입니다. [포토존·전통놀이 체험 안내]\n이용 시간: [00:00 ~ 00:00]" },
+
+  // 기타
+  { cat: "기타", q: "물건을 두고 나왔어요.",
+    a: "프런트로 연락 주시면 확인해 드립니다. 분실물은 [보관 기간] 동안 보관합니다." },
+  { cat: "기타", q: "몸이 아프거나 급한 일이 생기면요?",
+    a: "바로 프런트로 연락 주세요. 응급 상황에는 119에 먼저 전화하세요." }
+];
+/* ========================================================= */
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fill = (s) => esc(s).replace(/\[([^\]]+)\]/g, '<span class="todo">[$1]</span>').replace(/\n/g, '<br>');
+const isPlaceholder = (s) => /\[[^\]]+\]/.test(s);
+const telHref = (s) => 'tel:' + String(s).replace(/[^0-9+]/g, '');
+
+// 상단·하단 정보
+$('hotelName').innerHTML = fill(HOTEL.name);
+$('wifi').innerHTML = fill(HOTEL.wifi.ssid) + '<small>비밀번호 ' + fill(HOTEL.wifi.pw) + '</small>';
+$('times').innerHTML =
+  '<div><span>체크인</span>' + fill(HOTEL.checkin) + ' 이후</div>' +
+  '<div><span>체크아웃</span>' + fill(HOTEL.checkout) + '까지</div>';
+$('front').innerHTML = fill(HOTEL.extension) + '<small>' + fill(HOTEL.phone) + '</small>';
+$('footName').innerHTML = fill(HOTEL.name);
+$('footAddr').innerHTML = fill(HOTEL.address);
+['callBtn', 'footCall'].forEach(id => $(id).href = telHref(HOTEL.phone));
+$('mapBtn').href = isPlaceholder(HOTEL.mapUrl) ? '#' : HOTEL.mapUrl;
+
+// 비밀번호 복사
+$('copyPw').addEventListener('click', async () => {
+  const btn = $('copyPw');
+  try { await navigator.clipboard.writeText(HOTEL.wifi.pw); }
+  catch (e) {
+    const t = document.createElement('textarea');
+    t.value = HOTEL.wifi.pw; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch (_) {}
+    t.remove();
+  }
+  btn.textContent = '복사됨';
+  setTimeout(() => btn.textContent = '비밀번호 복사', 1600);
+});
+
+// FAQ
+const cats = ['전체', ...new Set(FAQ.map(f => f.cat))];
+let activeCat = '전체';
+
+$('chips').innerHTML = cats.map(c =>
+  `<button class="chip" type="button" data-cat="${esc(c)}" aria-pressed="${c === activeCat}">${esc(c)}</button>`
+).join('');
+
+$('chips').addEventListener('click', (e) => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  activeCat = b.dataset.cat;
+  document.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+  render();
+});
+$('search').addEventListener('input', render);
+
+function render() {
+  const q = $('search').value.trim().toLowerCase();
+  const list = FAQ.filter(f =>
+    (activeCat === '전체' || f.cat === activeCat) &&
+    (!q || (f.q + ' ' + f.a + ' ' + f.cat).toLowerCase().includes(q))
+  );
+  if (!list.length) {
+    $('faq').innerHTML = `<p class="empty">찾는 내용이 없어요. 프런트(${fill(HOTEL.extension)})로 문의해 주세요.</p>`;
+    return;
+  }
+  let html = '', last = '';
+  list.forEach(f => {
+    if (activeCat === '전체' && !q && f.cat !== last) {
+      html += `<h3 class="group-title">${esc(f.cat)}</h3>`;
+      last = f.cat;
+    }
+    html += `<details${q ? ' open' : ''}><summary>${fill(f.q)}</summary><div class="a">${fill(f.a)}</div></details>`;
+  });
+  $('faq').innerHTML = html;
+}
+render();
+</script>
+</body>
+</html>
